@@ -6,6 +6,8 @@
 #define OVERVIEWPAGE_H
 
 #include <QWidget>
+// Feature 2 - test
+#include "currencyapi.h"
 
 class ClientModel;
 class TransactionFilterProxy;
@@ -50,10 +52,19 @@ private:
     TxViewDelegate *txdelegate;
     TransactionFilterProxy *filter;
 
+    /* Feature 2 - test */
+    CurrencyApi *dogeBtc;
+    CurrencyApi *btcUsd;
+    CurrencyApi *btcEur;
+
 private slots:
     void updateDisplayUnit();
     void handleTransactionClicked(const QModelIndex &index);
     void updateAlerts(const QString &warnings);
+
+    /* Feature 2 - test */
+    void updateConversion(int index);
+    void calculateConversion(int unit, qint64 balance, float dogeBtc, float btcOther, QString currency);
 };
 
 #endif // OVERVIEWPAGE_H

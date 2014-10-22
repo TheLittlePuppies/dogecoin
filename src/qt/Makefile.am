@@ -146,7 +146,8 @@ QT_MOC_CPP = \
   moc_utilitydialog.cpp \
   moc_walletframe.cpp \
   moc_walletmodel.cpp \
-  moc_walletview.cpp
+  moc_walletview.cpp \
+  moc_currencyapi.cpp
 
 DOGECOIN_MM = \
   macdockiconhandler.mm \
@@ -213,7 +214,8 @@ BITCOIN_QT_H = \
   walletmodel.h \
   walletmodeltransaction.h \
   walletview.h \
-  winshutdownmonitor.h
+  winshutdownmonitor.h \
+  currencyapi.h
 
 RES_ICONS = \
   res/icons/add.png \
@@ -288,7 +290,10 @@ BITCOIN_QT_CPP = \
   splashscreen.cpp \
   trafficgraphwidget.cpp \
   utilitydialog.cpp \
-  winshutdownmonitor.cpp
+  winshutdownmonitor.cpp \
+  ../json/json_spirit_value.cpp \
+  ../json/json_spirit_reader.cpp \
+  currencyapi.cpp
 
 if ENABLE_WALLET
 BITCOIN_QT_CPP += \

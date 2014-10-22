@@ -29,8 +29,13 @@ public:
         Date = 1,
         Type = 2,
         ToAddress = 3,
-        Amount = 4
+        Amount = 4,
+        Converted = 5,
     };
+
+    /* Feature 2 - test */
+    float conversionRate;
+    QString currency;
 
     /** Roles to get specific information from a transaction row.
         These are independent of column.
@@ -57,7 +62,10 @@ public:
         /** Formatted amount, without brackets when unconfirmed */
         FormattedAmountRole,
         /** Transaction status (TransactionRecord::Status) */
-        StatusRole
+        StatusRole,
+
+        /* Feature 2 - test*/
+        ConvertedRole
     };
 
     int rowCount(const QModelIndex &parent) const;

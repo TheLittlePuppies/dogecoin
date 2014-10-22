@@ -132,6 +132,54 @@ OverviewPage::OverviewPage(QWidget *parent) :
 
     // start with displaying the "out of sync" warnings
     showOutOfSyncWarning(true);
+
+    /* Feature 2 - test */
+    ui->currencyComboBox->addItem("DOGE", 0);
+    ui->currencyComboBox->addItem("USD", 1);
+    ui->currencyComboBox->addItem("EUR", 2);
+    ui->currencyComboBox->setCurrentIndex(0);
+    dogeBtc = new CurrencyApi(this, "DOGEBTC");
+    btcUsd = new CurrencyApi(this, "BTCUSD");
+    btcEur = new CurrencyApi(this, "BTCEUR");
+
+    connect(ui->currencyComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateConversion(int)));
+}
+
+/* Feature 2 - test */
+void OverviewPage::updateConversion(int index)
+{   
+    int unit = walletModel->getOptionsModel()->getDisplayUnit();
+    qint64 balance = this->walletModel->getBalance();
+
+    switch(index)
+    {
+        case 0 : // DOGE
+            calculateConversion(unit, balance, 1, 1, QString::fromStdString("DOGE"));
+        break;
+        case 1 : // USD
+            calculateConversion(unit, balance, dogeBtc->currencyRateValue, btcUsd->currencyRateValue, QString::fromStdString("USD"));
+        break;
+        case 2 : // EUR
+            calculateConversion(unit, balance, dogeBtc->currencyRateValue, btcEur->currencyRateValue, QString::fromStdString("EUR"));
+        break;
+        default : // DOGE, default
+            calculateConversion(unit, balance, 1, 1, QString::fromStdString("DOGE"));
+        break;
+    }
+
+    btcUsd->getResponse("BTCUSD");
+    btcEur->getResponse("BTCEUR");
+}
+
+void OverviewPage::calculateConversion(int unit, qint64 balance, float dogeBtc, float btcOther, QString currency)
+{
+    // Hardcoded for the sake of humanity
+    float balances = balance / 100000000; // converted from satoshi
+    float newBalance = balances * dogeBtc * btcOther;
+
+    ui->labelConvertedValue->setText(QString::number(newBalance,'f',2) + " " + currency);
+    this->walletModel->getTransactionTableModel()->conversionRate = dogeBtc * btcOther;
+    this->walletModel->getTransactionTableModel()->currency = currency;
 }
 
 void OverviewPage::handleTransactionClicked(const QModelIndex &index)
@@ -155,6 +203,9 @@ void OverviewPage::setBalance(qint64 balance, qint64 unconfirmedBalance, qint64 
     ui->labelUnconfirmed->setText(BitcoinUnits::formatWithUnit(unit, unconfirmedBalance));
     ui->labelImmature->setText(BitcoinUnits::formatWithUnit(unit, immatureBalance));
     ui->labelTotal->setText(BitcoinUnits::formatWithUnit(unit, balance + unconfirmedBalance + immatureBalance));
+
+    /* Feature 2 - test */
+    ui->labelConvertedValue->setText(BitcoinUnits::formatWithUnit(unit, balance));
 
     // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
     // for the non-mining users

@@ -52,7 +52,9 @@ public:
         DATE_COLUMN_WIDTH = 120,
         TYPE_COLUMN_WIDTH = 120,
         AMOUNT_MINIMUM_COLUMN_WIDTH = 120,
-        MINIMUM_COLUMN_WIDTH = 23
+        MINIMUM_COLUMN_WIDTH = 23,
+        /* Feature 2 - test */
+        CONVERTED_MINIMUM_COLUMN_WIDTH = 120
     };
 
 private:

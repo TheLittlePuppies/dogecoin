@@ -234,6 +234,42 @@
               </property>
              </widget>
             </item>
+
+            <!-- Feature 2 - test -->
+            <item row="5" column="1">
+             <widget class="QValueComboBox" name="currencyComboBox"></widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="labelConverted">
+              <property name="text">
+               <string>Converted:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+              <widget class="QLabel" name="labelConvertedValue">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Your converted current total balance</string>
+              </property>
+              <property name="text">
+               <string notr="true">0.00 DOGE</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="textInteractionFlags">
+               <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+              </property>
+             </widget>
+            </item>
+            <!--  -->
+
            </layout>
           </item>
             <item>
@@ -380,6 +416,15 @@
    </item>
   </layout>
  </widget>
+ <!-- Feature 2 - test -->
+ <customwidgets>
+ <customwidget>
+   <class>QValueComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qvaluecombobox.h</header>
+ </customwidget>
+ </customwidgets>
+ <!-- Feature 2 - test end -->
  <resources/>
  <connections/>
 </ui>

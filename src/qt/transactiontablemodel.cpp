@@ -31,7 +31,8 @@ static int column_alignments[] = {
         Qt::AlignLeft|Qt::AlignVCenter, /* date */
         Qt::AlignLeft|Qt::AlignVCenter, /* type */
         Qt::AlignLeft|Qt::AlignVCenter, /* address */
-        Qt::AlignRight|Qt::AlignVCenter /* amount */
+        Qt::AlignRight|Qt::AlignVCenter, /* amount */
+        Qt::AlignRight|Qt::AlignVCenter, /* Feature 2 - test - converted */
     };
 
 // Comparison operator for sort/binary search of model tx list
@@ -235,7 +236,9 @@ TransactionTableModel::TransactionTableModel(CWallet* wallet, WalletModel *paren
         walletModel(parent),
         priv(new TransactionTablePriv(wallet, this))
 {
-    columns << QString() << tr("Date") << tr("Type") << tr("Address") << tr("Amount");
+    /* Feature 2 - test */
+    columns << QString() << tr("Date") << tr("Type") << tr("Address") << tr("Amount") << tr("Converted");
+    this->currency = "DOGE";
 
     priv->refreshWallet();
 
@@ -513,6 +516,18 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
             return formatTxToAddress(rec, false);
         case Amount:
             return formatTxAmount(rec);
+        /* Feature 2 - test */
+        case Converted:
+            if(this->currency == "DOGE")
+            {
+                return formatTxAmount(rec);
+            }
+            else
+            {
+                float temp = conversionRate * ((rec->credit + rec->debit)/100000000);
+                QString temp2 = QString::number(temp, 'f', 2);
+                return temp2;
+            }
         }
         break;
     case Qt::EditRole:
@@ -572,6 +587,18 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         return formatTxAmount(rec, false);
     case StatusRole:
         return rec->status.status;
+    /* Feature 2 - test */
+    case ConvertedRole:
+        if(this->currency == "DOGE")
+        {
+            return formatTxAmount(rec);
+        }
+        else
+        {
+            float temp = conversionRate * ((rec->credit + rec->debit)/100000000);
+            QString temp2 = QString::number(temp, 'f', 2);
+            return temp2;
+        }
     }
     return QVariant();
 }
@@ -601,6 +628,9 @@ QVariant TransactionTableModel::headerData(int section, Qt::Orientation orientat
                 return tr("Destination address of transaction.");
             case Amount:
                 return tr("Amount removed from or added to balance.");
+            /* Feature 2 - test */
+            case Converted:
+                return tr("Converted values from selected currency.");
             }
         }
     }
