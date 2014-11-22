@@ -95,6 +95,9 @@ private:
     QAction *openAction;
     QAction *showHelpMessageAction;
 
+    /* Feature 4 - analyticsoverview */
+    QAction *analyticsOverviewAction;
+
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
     RPCConsole *rpcConsole;
@@ -164,6 +167,9 @@ private slots:
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
+
+    /* Feature 4 - analyticsoverview */
+    void gotoAnalyticsOverview();
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");
