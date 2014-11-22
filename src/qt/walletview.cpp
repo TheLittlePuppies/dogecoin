@@ -18,6 +18,9 @@
 #include "transactionview.h"
 #include "walletmodel.h"
 
+/* Feature 4 - analyticsoverview */
+#include "analyticsoverview.h"
+
 #include "ui_interface.h"
 
 #include <QAction>
@@ -53,6 +56,10 @@ WalletView::WalletView(QWidget *parent):
 
     receiveCoinsPage = new ReceiveCoinsDialog();
     sendCoinsPage = new SendCoinsDialog();
+
+    /* Feature 4 - analyticsoverview */
+    analyticsOverview = new AnalyticsOverview();
+    addWidget(analyticsOverview);
 
     addWidget(overviewPage);
     addWidget(transactionsPage);
@@ -113,6 +120,9 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     receiveCoinsPage->setModel(walletModel);
     sendCoinsPage->setModel(walletModel);
 
+    /* Feature 4 - analyticsoverview */
+    analyticsOverview->setModel(walletModel);
+
     if (walletModel)
     {
         // Receive and pass through messages from wallet model
@@ -171,6 +181,12 @@ void WalletView::gotoSendCoinsPage(QString addr)
 
     if (!addr.isEmpty())
         sendCoinsPage->setAddress(addr);
+}
+
+/* Feature 4 - analyticsoverview */
+void WalletView::gotoAnalyticsOverview()
+{
+    setCurrentWidget(analyticsOverview);
 }
 
 void WalletView::gotoSignMessageTab(QString addr)

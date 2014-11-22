@@ -57,6 +57,9 @@ public slots:
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
 
+    /* Feature 4 - analyticsoverview */
+    void gotoAnalyticsOverview();
+
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");
     /** Show Sign/Verify Message dialog and switch to verify message tab */

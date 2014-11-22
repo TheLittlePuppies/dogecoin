@@ -101,7 +101,8 @@ QT_FORMS_UI = \
   forms/sendcoinsdialog.ui \
   forms/sendcoinsentry.ui \
   forms/signverifymessagedialog.ui \
-  forms/transactiondescdialog.ui
+  forms/transactiondescdialog.ui \
+  forms/analyticsoverview.ui
 
 QT_MOC_CPP = \
   moc_addressbookpage.cpp \
@@ -146,7 +147,8 @@ QT_MOC_CPP = \
   moc_utilitydialog.cpp \
   moc_walletframe.cpp \
   moc_walletmodel.cpp \
-  moc_walletview.cpp
+  moc_walletview.cpp \
+  moc_analyticsoverview.cpp
 
 DOGECOIN_MM = \
   macdockiconhandler.mm \
@@ -156,7 +158,8 @@ QT_MOC = \
   bitcoin.moc \
   intro.moc \
   overviewpage.moc \
-  rpcconsole.moc
+  rpcconsole.moc \ 
+  analyticsoverview.moc
 
 QT_QRC_CPP = qrc_dogecoin.cpp
 QT_QRC = dogecoin.qrc
@@ -213,7 +216,8 @@ BITCOIN_QT_H = \
   walletmodel.h \
   walletmodeltransaction.h \
   walletview.h \
-  winshutdownmonitor.h
+  winshutdownmonitor.h \
+  analyticsoverview.h
 
 RES_ICONS = \
   res/icons/add.png \
@@ -317,7 +321,8 @@ BITCOIN_QT_CPP += \
   walletframe.cpp \
   walletmodel.cpp \
   walletmodeltransaction.cpp \
-  walletview.cpp
+  walletview.cpp \
+  analyticsoverview.cpp
 endif
 
 RES_IMAGES = \

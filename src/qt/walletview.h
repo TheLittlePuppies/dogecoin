@@ -16,6 +16,9 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 
+/* Feature 4 - analyticsoverview */
+class AnalyticsOverview;
+
 QT_BEGIN_NAMESPACE
 class QModelIndex;
 class QProgressDialog;
@@ -59,6 +62,9 @@ private:
     ReceiveCoinsDialog *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;
 
+    /* Feature 4 - analyticsoverview */
+    AnalyticsOverview *analyticsOverview;
+
     TransactionView *transactionView;
 
     QProgressDialog *progressDialog;
@@ -72,6 +78,9 @@ public slots:
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
+
+    /* Feature 4 - analyticsoverview */
+    void gotoAnalyticsOverview();
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");

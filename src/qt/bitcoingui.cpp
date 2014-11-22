@@ -256,6 +256,14 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
+    /* Feature 4 - analyticsoverview */
+    analyticsOverviewAction = new QAction(QIcon(":/icons/history"), tr("&Analytics"), this);
+    analyticsOverviewAction->setStatusTip(tr("Analytics tools for wallet analysis"));
+    analyticsOverviewAction->setToolTip(analyticsOverviewAction->statusTip());
+    analyticsOverviewAction->setCheckable(true);
+    // analyticsOverviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
+    tabGroup->addAction(analyticsOverviewAction);
+
     historyAction = new QAction(QIcon(":/icons/history"), tr("&Transactions"), this);
     historyAction->setStatusTip(tr("Browse transaction history"));
     historyAction->setToolTip(historyAction->statusTip());
@@ -273,6 +281,10 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(gotoReceiveCoinsPage()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
+
+    /* Feature 4 - analyticsoverview */
+    connect(analyticsOverviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(analyticsOverviewAction, SIGNAL(triggered()), this, SLOT(gotoAnalyticsOverview()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
@@ -402,6 +414,10 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
+        
+        /* Feature 4 - analyticsoverview */
+        toolbar->addAction(analyticsOverviewAction);
+        
         overviewAction->setChecked(true);
     }
 }
@@ -466,6 +482,10 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
     sendCoinsAction->setEnabled(enabled);
     receiveCoinsAction->setEnabled(enabled);
     historyAction->setEnabled(enabled);
+
+    /*   Feature 4 - analyticsoverview */
+    analyticsOverviewAction->setEnabled(enabled);
+
     encryptWalletAction->setEnabled(enabled);
     backupWalletAction->setEnabled(enabled);
     changePassphraseAction->setEnabled(enabled);
@@ -523,6 +543,10 @@ void BitcoinGUI::createTrayIconMenu()
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(sendCoinsAction);
     trayIconMenu->addAction(receiveCoinsAction);
+
+    /* Feature 4 - analyticsoverview */
+    trayIconMenu->addAction(analyticsOverviewAction);
+
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(signMessageAction);
     trayIconMenu->addAction(verifyMessageAction);
@@ -605,6 +629,13 @@ void BitcoinGUI::gotoSendCoinsPage(QString addr)
 {
     sendCoinsAction->setChecked(true);
     if (walletFrame) walletFrame->gotoSendCoinsPage(addr);
+}
+
+/* Feature 4 - analyticsoverview */
+void BitcoinGUI::gotoAnalyticsOverview()
+{
+    analyticsOverviewAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoAnalyticsOverview();
 }
 
 void BitcoinGUI::gotoSignMessageTab(QString addr)
