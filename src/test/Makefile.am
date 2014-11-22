@@ -64,6 +64,7 @@ test_dogecoin_SOURCES = \
   util_tests.cpp \
   scriptnum_tests.cpp \
   sighash_tests.cpp \
+  statistics_tests.cpp \
   $(JSON_TEST_FILES) $(RAW_TEST_FILES)
 
 if ENABLE_WALLET

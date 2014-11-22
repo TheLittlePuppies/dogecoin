@@ -62,6 +62,7 @@ BITCOIN_CORE_H = \
   script.h \
   scrypt.h \
   serialize.h \
+  statistics.h \
   sync.h \
   threadsafety.h \
   tinyformat.h \
@@ -126,6 +127,7 @@ libbitcoin_wallet_a_SOURCES = \
 libbitcoin_server_wallet_a_SOURCES = \
   rpcdump.cpp \
   rpcwallet.cpp \
+  statistics.cpp \
   $(BITCOIN_CORE_H)
 
 libbitcoin_common_a_SOURCES = \
