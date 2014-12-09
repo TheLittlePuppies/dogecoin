@@ -14,6 +14,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
+#include <list>
 class CDiskBlockPos;
 #include <boost/filesystem.hpp>
 class CStatistic{
@@ -21,11 +22,12 @@ public:
 void reloadBlockForStatistics(string dataDir="",int startNFile=0);
 char* getTimeString(uint32_t timeStamp);
 string getDateString(uint32_t timeStamp);
-
+CBlock Latestone;
 bool LoadExternalBlockFile2(FILE *fileIn, CDiskBlockPos *dbp);
 
 FILE* OpenDiskFile2(const CDiskBlockPos &pos, const char *prefix, bool fReadOnly,string dataDir="");
 map<string,float> storage;
+list<std::pair<string,float> > container;
 private:
     bool IsGather;
     time_t gatherTime;

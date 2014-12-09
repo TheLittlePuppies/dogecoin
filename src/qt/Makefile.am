@@ -148,7 +148,8 @@ QT_MOC_CPP = \
   moc_walletframe.cpp \
   moc_walletmodel.cpp \
   moc_walletview.cpp \
-  moc_analyticsoverview.cpp
+  moc_analyticsoverview.cpp \
+  moc_analyticsModel.cpp
 
 DOGECOIN_MM = \
   macdockiconhandler.mm \
@@ -158,7 +159,7 @@ QT_MOC = \
   bitcoin.moc \
   intro.moc \
   overviewpage.moc \
-  rpcconsole.moc \ 
+  rpcconsole.moc \
   analyticsoverview.moc
 
 QT_QRC_CPP = qrc_dogecoin.cpp
@@ -217,7 +218,8 @@ BITCOIN_QT_H = \
   walletmodeltransaction.h \
   walletview.h \
   winshutdownmonitor.h \
-  analyticsoverview.h
+  analyticsoverview.h \
+  analyticsModel.h
 
 RES_ICONS = \
   res/icons/add.png \
@@ -263,7 +265,7 @@ RES_ICONS = \
   res/icons/tx_input.png \
   res/icons/tx_output.png \
   res/icons/tx_mined.png
-  
+
 RES_FONTS = \
   res/fonts/ComicNeue-Bold.ttf \
   res/fonts/ComicNeue-Bold-Oblique.ttf \
@@ -322,7 +324,8 @@ BITCOIN_QT_CPP += \
   walletmodel.cpp \
   walletmodeltransaction.cpp \
   walletview.cpp \
-  analyticsoverview.cpp
+  analyticsoverview.cpp \
+  analyticsModel.cpp
 endif
 
 RES_IMAGES = \

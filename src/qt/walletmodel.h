@@ -20,6 +20,7 @@ class OptionsModel;
 class RecentRequestsTableModel;
 class TransactionTableModel;
 class WalletModelTransaction;
+class AnalyticsModel;
 
 class CCoinControl;
 class CKeyID;
@@ -124,7 +125,7 @@ public:
     AddressTableModel *getAddressTableModel();
     TransactionTableModel *getTransactionTableModel();
     RecentRequestsTableModel *getRecentRequestsTableModel();
-
+    AnalyticsModel *getAnalyticsModel();
     qint64 getBalance(const CCoinControl *coinControl = NULL) const;
     qint64 getUnconfirmedBalance() const;
     qint64 getImmatureBalance() const;
@@ -201,7 +202,7 @@ private:
     AddressTableModel *addressTableModel;
     TransactionTableModel *transactionTableModel;
     RecentRequestsTableModel *recentRequestsTableModel;
-
+    AnalyticsModel *analyticsModel;
     // Cache some values to be able to detect changes
     qint64 cachedBalance;
     qint64 cachedUnconfirmedBalance;

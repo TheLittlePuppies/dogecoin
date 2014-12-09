@@ -9,6 +9,11 @@
 
 #include <QDialog>
 #include <QString>
+#include <QMap>
+#include <QDate>
+#include "statistics.h"
+
+
 
 class OptionsModel;
 class SendCoinsEntry;
@@ -34,27 +39,38 @@ public:
         Daily,
         Monthly
     };
-
+    enum ColumnWidths {
+        DATE_COLUMN_WIDTH = 130,
+        LABEL_COLUMN_WIDTH = 120,
+        AMOUNT_MINIMUM_COLUMN_WIDTH = 160,
+        MINIMUM_COLUMN_WIDTH = 130
+    };
     explicit AnalyticsOverview(QWidget *parent = 0);
     ~AnalyticsOverview();
 
     void setModel(WalletModel *model);
-
+    void StartThread();
 
 public slots:
-    
+    void message(QString container);
 
+signals:
+    void LoadBlockSignal();
 private:
     Ui::AnalyticsOverview *ui;
     WalletModel *model;
-    bool fNewRecipientAllowed;
 
+    bool fNewRecipientAllowed;
+    CStatistic *statistic;
+    QMap<QDateTime,float> storeMap;
+    void reload();
 private slots:
     void dropdownTriggered(int index);
+    void LoadBlock();
 
-signals:
     // Fired when a message should be reported to the user
     // void message(const QString &title, const QString &message, unsigned int style);
 };
+
 
 #endif // ANALYTICSOVERVIEW_H

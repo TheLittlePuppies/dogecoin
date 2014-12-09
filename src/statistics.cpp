@@ -21,20 +21,11 @@ string CStatistic::getDateString(uint32_t timeStamp)
 
 bool CStatistic::LoadExternalBlockFile2(FILE *fileIn, CDiskBlockPos *dbp)
 {
-
+ boost::this_thread::interruption_point();
     int nLoaded = 0;
 
         CBufferedFile blkdat(fileIn, 2 * MAX_BLOCK_SIZE, MAX_BLOCK_SIZE + 8, SER_DISK, CLIENT_VERSION);
-        if (dbp)
-        {
-            // (try to) skip already indexed part
-            CBlockFileInfo info;
-            if (pblocktree->ReadBlockFileInfo(dbp->nFile, info))
-            {
 
-                blkdat.Seek(info.nSize);
-            }
-        }
         uint64_t nRewind = blkdat.GetPos();
         while (blkdat.good() && !blkdat.eof())
         {
@@ -63,7 +54,7 @@ bool CStatistic::LoadExternalBlockFile2(FILE *fileIn, CDiskBlockPos *dbp)
             }
             catch (std::exception &e)
             {
-                // no valid block header found; don't complain
+                //no valid block header found; don't complain
                 break;
             }
             try
@@ -84,7 +75,7 @@ bool CStatistic::LoadExternalBlockFile2(FILE *fileIn, CDiskBlockPos *dbp)
                 {
                     k+=tx.GetValueOut();
                 }
-                //printf("running block:%s:%lld\n",getTimeString(block.nTime),k);
+
                 string date =getDateString(block.nTime);
                 map<string ,float >::iterator l_it;
                 l_it=storage.find(date);
@@ -92,22 +83,19 @@ bool CStatistic::LoadExternalBlockFile2(FILE *fileIn, CDiskBlockPos *dbp)
                     storage[date]=0;
 
                 storage[date]+=k;
-
-
-                block.print();
+                Latestone = block;
 
 
             }
             catch (std::exception &e)
             {
-                printf("%s : Deserialize or I/O error - %s", __func__, e.what());
+                //printf("%s : Deserialize or I/O error - %s", __func__, e.what());
             }
         }
+
+
         fclose(fileIn);
-        IsGather = nLoaded;
-        struct tm tm;
-        gatherTime= timegm(&tm);
-        printf("gatherTime =%s\n ",getTimeString(gatherTime));
+
     return nLoaded > 0;
 }
 
@@ -121,46 +109,42 @@ FILE *CStatistic::OpenDiskFile2(const CDiskBlockPos &pos, const char *prefix, bo
 
 
 
-    boost::filesystem::path p1=GetDataDir();
+    boost::filesystem::path p1=GetDataDir()/"blocks";
     if(dataDir!="")
     {
         boost::filesystem::path dataPath(dataDir);
         p1=dataPath;
     }
     boost::filesystem::path path = p1 / strprintf("%s%05u.dat", prefix, pos.nFile);
-    printf("%s\n", path.parent_path().string().c_str());
     boost::filesystem::create_directories(path.parent_path());
     FILE *file = fopen(path.string().c_str(), "rb+");
     if (!file && !fReadOnly)
         file = fopen(path.string().c_str(), "wb+");
     if (!file)
     {
-        printf("Unable to open file %s\n", path.string().c_str());
+
         return NULL;
     }
     if (pos.nPos)
     {
         if (fseek(file, pos.nPos, SEEK_SET))
         {
-            printf("Unable to seek to position %u of %s\n", pos.nPos, path.string().c_str());
+
             fclose(file);
             return NULL;
         }
     }
     return file;
 }
-
 void CStatistic::reloadBlockForStatistics(string dataDir,int startNFile)
 {
     while (true)
     {
         CDiskBlockPos pos(startNFile, 0);
-        if (!pblocktree)
-            printf("pblocktree is null\n" );
+
         FILE *file = OpenDiskFile2(pos, "blk", true,dataDir);
         if (!file)
             break;
-        printf("Reindexing block file blk%05u.dat...\n", (unsigned int)startNFile);
         CBlockFileInfo info;
         pblocktree->ReadBlockFileInfo((&pos)->nFile, info);
 
@@ -168,16 +152,5 @@ void CStatistic::reloadBlockForStatistics(string dataDir,int startNFile)
         startNFile++;
     }
 
-    fReindex = false;
-
-    for (map<uint256, CBlockIndex *>::iterator mi = mapBlockIndex.begin(); mi != mapBlockIndex.end(); ++mi)
-    {
-        CBlockIndex *pindex = (*mi).second;
-        CBlock block;
-        ReadBlockFromDisk(block, pindex);
-        block.BuildMerkleTree();
-        block.print();
-
-        LogPrintf("\n");
-    }
 }
+
